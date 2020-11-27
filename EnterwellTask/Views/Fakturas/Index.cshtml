@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EnterwellTask.Models.Faktura>
+﻿@model IEnumerable<EnterwellTask.Models.FakturaViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -10,30 +10,28 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.DatumStvaranja)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DatumDospijeca)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UkupnaCijenaBezPoreza)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UkupnaCijenaSaPorezom)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PrimateljRacuna)
-        </th>
-        <th></th>
-    </tr>
-
+    <thead style="background-color:lightgrey">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DatumStvaranja)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatumDospijeca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UkupnaCijenaSaPorezom)
+            </th>
+            <th>
+                User
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrimateljRacuna)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 @foreach (var item in Model) {
-    <tr>
+    <tr style="background-color:ghostwhite">
         <td>
             @Html.DisplayFor(modelItem => item.DatumStvaranja)
         </td>
@@ -41,13 +39,10 @@
             @Html.DisplayFor(modelItem => item.DatumDospijeca)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UkupnaCijenaBezPoreza)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.UkupnaCijenaSaPorezom)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserID)
+            @Html.DisplayFor(modelItem => item.Username)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PrimateljRacuna)

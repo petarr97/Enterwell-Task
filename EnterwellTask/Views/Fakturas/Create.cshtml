@@ -4,15 +4,65 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+    <div class="data-div">
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>
+                    Naziv
+                </th>
+                <th>
+                    Cijena
+                </th>
+                <th>
+                    Kolicina
+                </th>
+                <th></th>
+            </tr>
 
+            @for (int i = 0; i < Model.Stavke.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @(i+1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.Stavke[i].Opis)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.Stavke[i].Cijena) KM
+                    </td>
+                    <td>
+                        <input type="text" style="width:7%" value="1" id="@Model.Stavke[i].StavkaID" />
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-success" onclick="funkcija('@Model.Stavke[i].Opis','@Model.Stavke[i].Cijena',@Model.Stavke[i].StavkaID)" value="Dodaj" />
+                    </td>
+                </tr>
+
+            }
+        </table>
+    </div>
+    <div class="stavke-div">
+        <div style="background-color:ghostwhite;"><label style="font-size:20px">Ukupna cijena : </label><label  style="font-size:20px" id="ukupna-cijena">0</label><label  style="font-size:20px">KM</label></div>
+        <table class="table">
+            <thead>
+            <th>ID</th>
+            <th>Ime</th>
+            <th>Cijena</th>
+            <th>Kolicina</th>
+            <th></th>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Faktura</h4>
+    <div class="form-horizontal" >
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         
@@ -39,56 +89,8 @@
         </div>
     </div>
 
-    <div>
-        <table class="table">
-            <tr>
-                <th>
-                    Naziv
-                </th>
-                <th>
-                    Cijena
-                </th>
-                <th>
-                    Kolicina
-                </th>
-                <th></th>
-                <th></th>
-            </tr>
-
-            @for (int i = 0; i < Model.Stavke.Count; i++)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => modelItem.Stavke[i].Opis)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => modelItem.Stavke[i].Cijena) KM
-                    </td>
-                    <td>
-                        <input type="text" placeholder="Unesite Kolicinu" value="1" id="@Model.Stavke[i].StavkaID" />
-                    </td>
-                    <td>
-                        <input type="button" class="btn btn-success" onclick="funkcija('@Model.Stavke[i].Opis','@Model.Stavke[i].Cijena',@Model.Stavke[i].StavkaID)" value="Dodaj" />
-                    </td>
-                </tr>
-
-            }
-        </table>
-    </div>
-    <div>
-        <div><label>Ukupna cijena : </label><label id="ukupna-cijena">0</label><label>KM</label></div>
-        <table class="table">
-            <thead>
-                <th>ID</th>
-                <th>Ime</th>
-                <th>Cijena</th>
-                <th>Kolicina</th>
-            </thead>
-
-            <tbody id="tbody">
-            </tbody>
-        </table>
-    </div>
+    
+    
 }
 
 <div>
@@ -106,16 +108,17 @@
 
         let datum = document.getElementById("datum-dospijeca").value;
         let primatelj = document.getElementById("primatelj-racuna").value;
- 
+        let cijena = parseFloat(document.getElementById("ukupna-cijena").innerHTML);
+
         var stavke = [];
-        var listaIzabranihStavki = document.getElementById("tbody").getElementsByTagName("tr");
+        let listaIzabranihStavki = document.getElementById("tbody").getElementsByTagName("tr");
 
-        for (var i = 0; i < listaIzabranihStavki.length; i++) {
+        for (let i = 0; i < listaIzabranihStavki.length; i++) {
 
-            var tr = listaIzabranihStavki[i].getElementsByTagName("td");
+            let tr = listaIzabranihStavki[i].getElementsByTagName("td");
             var Stavka = {
                 Id: tr[0].innerHTML,
-                Kolicina: tr[3].innerHTML
+                Kolicina: tr[3].innerHTML,
             }
 
             stavke.push(Stavka);
@@ -124,7 +127,8 @@
         var data = {
             Stavke: stavke,
             DatumDospijeca: datum,
-            Primatelj: primatelj
+            Primatelj: primatelj,
+            Cijena:cijena
         }
 
         
@@ -156,10 +160,10 @@
 
     function funkcija(opis, cijena, id) {
 
-        var ukupnaCijena = document.getElementById("ukupna-cijena");
-        ukupnaCijena.innerHTML = parseFloat(ukupnaCijena.innerHTML) + parseFloat(cijena);
-
         var kolicina = document.getElementById(id);
+        var ukupnaCijena = document.getElementById("ukupna-cijena");
+        ukupnaCijena.innerHTML = parseFloat(ukupnaCijena.innerHTML) + parseInt(kolicina.value)*parseFloat(cijena);
+
         var element = document.getElementById("tbody");
         var newId = 'tr' + id;
 
@@ -173,7 +177,21 @@
 </script>
 <style>
     label{
-        font:20px;
+        height:10%;
         font-weight:bold;
     }
+    .data-div {
+        margin-top: 3%;
+        background-color: #f0f0f0;
+    }
+    th{
+        background-color:lightgrey;
+    }
+    .stavke-div {
+        background-color: #f0f0f0;
+    }
+    .btn-success {
+        background-color: #659490;
+    }
+    
 </style>

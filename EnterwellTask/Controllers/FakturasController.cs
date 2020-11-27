@@ -15,11 +15,28 @@ namespace EnterwellTask.Controllers
     public class FakturasController : Controller
     {
         private EnterwellDBContext db = new EnterwellDBContext();
+        private ApplicationDbContext appdb = new ApplicationDbContext();
 
         // GET: Fakturas
         public ActionResult Index()
         {
-            return View(db.Faktura.ToList());
+            List<Faktura> fakture = db.Faktura.ToList();
+            List<FakturaViewModel> model = new List<FakturaViewModel>();
+            foreach(Faktura f in fakture)
+            {
+                FakturaViewModel addModel = new FakturaViewModel();
+                addModel.PrimateljRacuna = f.PrimateljRacuna;
+                addModel.FakturaID = f.FakturaID;
+                addModel.DatumDospijeca = f.DatumDospijeca;
+                addModel.DatumStvaranja = f.DatumStvaranja;
+                addModel.UkupnaCijenaBezPoreza = f.UkupnaCijenaBezPoreza;
+                addModel.UkupnaCijenaSaPorezom = f.UkupnaCijenaSaPorezom;
+                addModel.UserID = f.UserID;
+                addModel.Username = appdb.Users.Find(f.UserID).Email;
+
+                model.Add(addModel);
+            }
+            return View(model);
         }
 
         // GET: Fakturas/Details/5
@@ -29,12 +46,23 @@ namespace EnterwellTask.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Faktura faktura = db.Faktura.Find(id);
-            if (faktura == null)
+            Faktura f = db.Faktura.Find(id);
+            FakturaViewModel addModel = new FakturaViewModel();
+            addModel.PrimateljRacuna = f.PrimateljRacuna;
+            addModel.FakturaID = f.FakturaID;
+            addModel.DatumDospijeca = f.DatumDospijeca;
+            addModel.DatumStvaranja = f.DatumStvaranja;
+            addModel.UkupnaCijenaBezPoreza = f.UkupnaCijenaBezPoreza;
+            addModel.UkupnaCijenaSaPorezom = f.UkupnaCijenaSaPorezom;
+            addModel.UserID = f.UserID;
+            addModel.Username = appdb.Users.Find(f.UserID).Email;
+
+
+            if (addModel == null)
             {
                 return HttpNotFound();
             }
-            return View(faktura);
+            return View(addModel);
         }
 
         // GET: Fakturas/Create
@@ -47,7 +75,7 @@ namespace EnterwellTask.Controllers
         }
         [Route("test")]
         [HttpPost]
-        public void test(RequestModel model)
+        public ActionResult test(RequestModel model)
         {
             Faktura faktura = new Faktura();
             if (ModelState.IsValid)
@@ -55,8 +83,7 @@ namespace EnterwellTask.Controllers
                 faktura.DatumDospijeca = model.DatumDospijeca.AsDateTime();
                 faktura.DatumStvaranja = DateTime.Now;
                 faktura.PrimateljRacuna = model.Primatelj;
-                faktura.UkupnaCijenaBezPoreza = 0;
-                faktura.UkupnaCijenaSaPorezom = 0;
+                faktura.UkupnaCijenaBezPoreza = model.Cijena;
                 faktura.UserID = User.Identity.GetUserId();
 
                 db.Faktura.Add(faktura);
@@ -75,9 +102,9 @@ namespace EnterwellTask.Controllers
                     db.SaveChanges();
 
                 }
-
-                //return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
+            return View();
         }
 
        
@@ -97,8 +124,6 @@ namespace EnterwellTask.Controllers
         }
 
         // POST: Fakturas/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "FakturaID,DatumStvaranja,DatumDospijeca,UkupnaCijenaBezPoreza,UkupnaCijenaSaPorezom,UserID,PrimateljRacuna")] Faktura faktura)
@@ -146,5 +171,6 @@ namespace EnterwellTask.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

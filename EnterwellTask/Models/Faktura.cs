@@ -17,7 +17,6 @@ namespace EnterwellTask.Models
         public virtual string UserID { get; set; }
         public string PrimateljRacuna { get; set; }
         public virtual ICollection<StavkeFakture> StavkeFakture { get; set; }
-
         public Faktura()
         {
             StavkeFakture = new HashSet<StavkeFakture>();

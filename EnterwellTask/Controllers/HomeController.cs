@@ -1,22 +1,34 @@
-﻿using System;
+﻿using Glimpse.AspNet.Tab;
+using Microsoft.Azure.Management.Storage.Fluent.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
+
 
 namespace EnterwellTask.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
         public ActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+                return View();
+            else return RedirectToAction("../Account/Login");
+
+
         }
+       
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
 

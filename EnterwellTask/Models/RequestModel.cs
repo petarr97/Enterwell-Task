@@ -10,5 +10,6 @@ namespace EnterwellTask.Models
         public List<ListRequestModel> Stavke { get; set; }
         public string DatumDospijeca { get; set; }
         public string Primatelj { get; set; }
+        public float Cijena { get; set; }
     }
 }
