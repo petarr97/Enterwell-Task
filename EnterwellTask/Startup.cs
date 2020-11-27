@@ -8,7 +8,9 @@ namespace EnterwellTask
     {
         public void Configuration(IAppBuilder app)
         {
+            
             ConfigureAuth(app);
+            
         }
     }
 }

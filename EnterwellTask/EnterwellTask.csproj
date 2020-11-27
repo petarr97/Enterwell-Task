@@ -168,14 +168,37 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FakturasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\StavkasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations.Identity\202011271852299_InitialMigrationIdentity.cs" />
+    <Compile Include="Migrations.Identity\202011271852299_InitialMigrationIdentity.Designer.cs">
+      <DependentUpon>202011271852299_InitialMigrationIdentity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations.Identity\Configuration.cs" />
+    <Compile Include="Migrations.MyDB\202011271853343_InitialMigrationDb.cs" />
+    <Compile Include="Migrations.MyDB\202011271853343_InitialMigrationDb.Designer.cs">
+      <DependentUpon>202011271853343_InitialMigrationDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations.MyDB\202011271913504_InitialMigrationDb1.cs" />
+    <Compile Include="Migrations.MyDB\202011271913504_InitialMigrationDb1.Designer.cs">
+      <DependentUpon>202011271913504_InitialMigrationDb1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations.MyDB\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CreateFakturaModel.cs" />
+    <Compile Include="Models\EnterwellDBContext.cs" />
+    <Compile Include="Models\Faktura.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RequestModel.cs" />
+    <Compile Include="Models\Stavka.cs" />
+    <Compile Include="Models\ListRequestModel.cs" />
+    <Compile Include="Models\StavkeFakture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -235,6 +258,16 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Stavkas\Create.cshtml" />
+    <Content Include="Views\Stavkas\Delete.cshtml" />
+    <Content Include="Views\Stavkas\Details.cshtml" />
+    <Content Include="Views\Stavkas\Edit.cshtml" />
+    <Content Include="Views\Stavkas\Index.cshtml" />
+    <Content Include="Views\Fakturas\Create.cshtml" />
+    <Content Include="Views\Fakturas\Delete.cshtml" />
+    <Content Include="Views\Fakturas\Details.cshtml" />
+    <Content Include="Views\Fakturas\Edit.cshtml" />
+    <Content Include="Views\Fakturas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -251,6 +284,17 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations.Identity\202011271852299_InitialMigrationIdentity.resx">
+      <DependentUpon>202011271852299_InitialMigrationIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations.MyDB\202011271853343_InitialMigrationDb.resx">
+      <DependentUpon>202011271853343_InitialMigrationDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations.MyDB\202011271913504_InitialMigrationDb1.resx">
+      <DependentUpon>202011271913504_InitialMigrationDb1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

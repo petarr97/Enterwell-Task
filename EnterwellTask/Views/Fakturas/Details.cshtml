@@ -1,0 +1,66 @@
+﻿@model EnterwellTask.Models.Faktura
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Faktura</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DatumStvaranja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DatumStvaranja)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DatumDospijeca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DatumDospijeca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UkupnaCijenaBezPoreza)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UkupnaCijenaBezPoreza)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UkupnaCijenaSaPorezom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UkupnaCijenaSaPorezom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrimateljRacuna)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrimateljRacuna)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FakturaID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

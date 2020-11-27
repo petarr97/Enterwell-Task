@@ -1,0 +1,179 @@
+﻿@model EnterwellTask.Models.CreateFakturaModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Faktura</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Faktura.DatumDospijeca, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Faktura.DatumDospijeca, new { htmlAttributes = new { @class = "form-control", @id ="datum-dospijeca" } })
+                @Html.ValidationMessageFor(model => model.Faktura.DatumDospijeca, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Faktura.PrimateljRacuna, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Faktura.PrimateljRacuna, new { htmlAttributes = new { @class = "form-control",@id = "primatelj-racuna" } })
+                @Html.ValidationMessageFor(model => model.Faktura.PrimateljRacuna, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button  onClick="createFaktura()" class="btn btn-default" >Create</button>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <table class="table">
+            <tr>
+                <th>
+                    Naziv
+                </th>
+                <th>
+                    Cijena
+                </th>
+                <th>
+                    Kolicina
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            @for (int i = 0; i < Model.Stavke.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.Stavke[i].Opis)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem.Stavke[i].Cijena) KM
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Unesite Kolicinu" value="1" id="@Model.Stavke[i].StavkaID" />
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-success" onclick="funkcija('@Model.Stavke[i].Opis','@Model.Stavke[i].Cijena',@Model.Stavke[i].StavkaID)" value="Dodaj" />
+                    </td>
+                </tr>
+
+            }
+        </table>
+    </div>
+    <div>
+        <div><label>Ukupna cijena : </label><label id="ukupna-cijena">0</label><label>KM</label></div>
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Ime</th>
+                <th>Cijena</th>
+                <th>Kolicina</th>
+            </thead>
+
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+
+   
+    function createFaktura() {
+
+        let datum = document.getElementById("datum-dospijeca").value;
+        let primatelj = document.getElementById("primatelj-racuna").value;
+ 
+        var stavke = [];
+        var listaIzabranihStavki = document.getElementById("tbody").getElementsByTagName("tr");
+
+        for (var i = 0; i < listaIzabranihStavki.length; i++) {
+
+            var tr = listaIzabranihStavki[i].getElementsByTagName("td");
+            var Stavka = {
+                Id: tr[0].innerHTML,
+                Kolicina: tr[3].innerHTML
+            }
+
+            stavke.push(Stavka);
+        }
+        
+        var data = {
+            Stavke: stavke,
+            DatumDospijeca: datum,
+            Primatelj: primatelj
+        }
+
+        
+        var settings = {
+            "url": "https://localhost:44379/Fakturas/test",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json",
+                "Cookie": "__RequestVerificationToken=4HexYm3ZgcPWVDcwx7XciLxUjnqGKyrrDUxaHNIQAUqZXr51WscTa_KAyGwOrxAvW2VPjFxYUtu-JXlbuZPRqz6jVVCyIjj2O7IRFVoSPa01"
+            },
+            "data": JSON.stringify(data),
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+        });
+    }
+
+    function delFunc(id) {
+
+        var cijena = document.getElementById(id).getElementsByClassName("cijena")[0].innerHTML;
+        var kolicina = document.getElementById(id).getElementsByClassName("kol")[0].innerHTML;
+
+        document.getElementById("ukupna-cijena").innerHTML = parseFloat(document.getElementById("ukupna-cijena").innerHTML) - parseFloat(cijena) * parseInt(kolicina);
+        document.getElementById(id).remove();
+
+    }
+
+    function funkcija(opis, cijena, id) {
+
+        var ukupnaCijena = document.getElementById("ukupna-cijena");
+        ukupnaCijena.innerHTML = parseFloat(ukupnaCijena.innerHTML) + parseFloat(cijena);
+
+        var kolicina = document.getElementById(id);
+        var element = document.getElementById("tbody");
+        var newId = 'tr' + id;
+
+        if (document.getElementById(newId) != null) {
+            var editEl = document.getElementById(newId);
+            editEl.getElementsByClassName("kol")[0].innerHTML = parseInt(editEl.getElementsByClassName("kol")[0].innerHTML)+parseInt(kolicina.value);
+        }
+        else
+            element.innerHTML += "<tr id=" + newId + "><td>"+id+"</td><td>" + opis + "</td><td class='cijena'>" + cijena + "</td><td class='kol'>" + kolicina.value + "</td><td><button onclick=delFunc('" + newId + "')>Izbrisi</button></td></tr>";
+    }
+</script>
+<style>
+    label{
+        font:20px;
+        font-weight:bold;
+    }
+</style>

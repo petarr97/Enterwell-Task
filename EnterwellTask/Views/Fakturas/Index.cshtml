@@ -1,0 +1,63 @@
+﻿@model IEnumerable<EnterwellTask.Models.Faktura>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DatumStvaranja)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DatumDospijeca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UkupnaCijenaBezPoreza)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UkupnaCijenaSaPorezom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrimateljRacuna)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatumStvaranja)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatumDospijeca)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UkupnaCijenaBezPoreza)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UkupnaCijenaSaPorezom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrimateljRacuna)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.FakturaID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.FakturaID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.FakturaID })
+        </td>
+    </tr>
+}
+
+</table>

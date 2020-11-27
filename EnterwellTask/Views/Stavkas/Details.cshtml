@@ -1,0 +1,42 @@
+﻿@model EnterwellTask.Models.Stavka
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Stavka</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Opis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Opis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cijena)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cijena)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UkupnaCijena)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UkupnaCijena)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StavkaID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
