@@ -11,5 +11,6 @@ namespace EnterwellTask.Models
         public string DatumDospijeca { get; set; }
         public string Primatelj { get; set; }
         public float Cijena { get; set; }
+        public string Taksa { get; set; }
     }
 }

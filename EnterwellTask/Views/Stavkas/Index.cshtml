@@ -10,17 +10,14 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
-    <tr>
+    <tr style="background-color:#222;color:white">
         <th>
             @Html.DisplayNameFor(model => model.Opis)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Cijena)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UkupnaCijena)
-        </th>
-        <th></th>
+        <th>Akcija</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -31,10 +28,8 @@
         <td>
             @Html.DisplayFor(modelItem => item.Cijena)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UkupnaCijena)
-        </td>
-        <td>
+       
+        <td style="width:40%">
             @Html.ActionLink("Edit", "Edit", new { id=item.StavkaID }) |
             @Html.ActionLink("Details", "Details", new { id=item.StavkaID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.StavkaID })
@@ -43,3 +38,9 @@
 }
 
 </table>
+<style>
+    .table{
+        width:60%;
+
+    }
+</style>

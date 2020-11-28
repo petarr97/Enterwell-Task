@@ -12,7 +12,6 @@ namespace EnterwellTask.Models
         public int StavkaID { get; set; }
         public string Opis { get; set; }
         public float Cijena { get; set; }
-        public float UkupnaCijena { get; set; }
         public virtual ICollection<StavkeFakture> StavkeFakture { get; set; }
         
         public Stavka()

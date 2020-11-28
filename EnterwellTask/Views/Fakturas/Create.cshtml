@@ -30,7 +30,7 @@
                         @Html.DisplayFor(modelItem => modelItem.Stavke[i].Opis)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => modelItem.Stavke[i].Cijena) KM
+                        @Html.DisplayFor(modelItem => modelItem.Stavke[i].Cijena)
                     </td>
                     <td>
                         <input type="text" style="width:7%" value="1" id="@Model.Stavke[i].StavkaID" />
@@ -44,7 +44,7 @@
         </table>
     </div>
     <div class="stavke-div">
-        <div style="background-color:ghostwhite;"><label style="font-size:20px">Ukupna cijena : </label><label  style="font-size:20px" id="ukupna-cijena">0</label><label  style="font-size:20px">KM</label></div>
+        <div style="background-color:ghostwhite;"><label style="font-size:20px">Ukupna cijena : </label><label  style="font-size:20px" id="ukupna-cijena">0</label><label  style="font-size:20px">K</label></div>
         <table class="table">
             <thead>
             <th>ID</th>
@@ -77,14 +77,22 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Faktura.PrimateljRacuna, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Faktura.PrimateljRacuna, new { htmlAttributes = new { @class = "form-control",@id = "primatelj-racuna" } })
+                @Html.EditorFor(model => model.Faktura.PrimateljRacuna, new { htmlAttributes = new { @class = "form-control", @id = "primatelj-racuna" } })
                 @Html.ValidationMessageFor(model => model.Faktura.PrimateljRacuna, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-horizontal">
+            <label  style="width:20%; display:inline-block"class="control-label col-md-2">Izaberite obracun poreza: </label>
+            <select style="margin-left:1%;margin-top:1%;:inline-block" id="dropdown">
+                <option value="0" selected="selected">Hrvatska</option>
+                <option value="1">Bosna</option>
+            </select>
+        </div>
+        
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button  onClick="createFaktura()" class="btn btn-default" >Create</button>
+                <button style="margin-top:5%;width:10%;"  onClick="createFaktura()" class="btn btn-default" >Create</button>
             </div>
         </div>
     </div>
@@ -103,16 +111,18 @@
 
 <script>
 
-   
     function createFaktura() {
 
         let datum = document.getElementById("datum-dospijeca").value;
         let primatelj = document.getElementById("primatelj-racuna").value;
         let cijena = parseFloat(document.getElementById("ukupna-cijena").innerHTML);
+        let dropdown = document.getElementById("dropdown");
+        var taksa = dropdown.options[dropdown.selectedIndex].text;
+      
 
         var stavke = [];
         let listaIzabranihStavki = document.getElementById("tbody").getElementsByTagName("tr");
-
+       
         for (let i = 0; i < listaIzabranihStavki.length; i++) {
 
             let tr = listaIzabranihStavki[i].getElementsByTagName("td");
@@ -123,17 +133,22 @@
 
             stavke.push(Stavka);
         }
+        if (stavke.length == 0 || datum === "" || primatelj === "") {
+            alert("Morate popuniti sva polja, i izabrati stavke fakture!!!");
+            return;
+        }
         
         var data = {
             Stavke: stavke,
             DatumDospijeca: datum,
             Primatelj: primatelj,
-            Cijena:cijena
+            Cijena: cijena,
+            Taksa: taksa
         }
 
         
         var settings = {
-            "url": "https://localhost:44379/Fakturas/test",
+            "url": "https://localhost:44379/Fakturas/AddFaktura",
             "method": "POST",
             "timeout": 0,
             "headers": {
@@ -184,8 +199,9 @@
         margin-top: 3%;
         background-color: #f0f0f0;
     }
-    th{
-        background-color:lightgrey;
+    th {
+        background-color: #222;
+        color:white;
     }
     .stavke-div {
         background-color: #f0f0f0;
@@ -193,5 +209,11 @@
     .btn-success {
         background-color: #659490;
     }
-    
+    input:hover {
+        transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        background-color:floralwhite;
+    }
+    .form-group {
+        text-align: left;
+    }
 </style>

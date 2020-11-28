@@ -9,7 +9,7 @@
 <div>
     <h4>Faktura</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal" style="text-align:left">
         <dt>
             @Html.DisplayNameFor(model => model.DatumStvaranja)
         </dt>
@@ -43,7 +43,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Username)
+            Kreirao fakturu
         </dt>
 
         <dd>
@@ -60,7 +60,51 @@
 
     </dl>
 </div>
+<div style="width:50%">
+    <h2 >Stavke fakture</h2>
+    <table class="table">
+        <thead>
+            <th>
+                #
+            </th>
+            <th>
+                Opis
+            </th>
+            <th>
+                Kolicina
+            </th>
+        </thead>
+        <tbody>
+          @for(int i = 0; i <Model.Stavke.Count; i++)
+          {
+            <tr>
+                <td>@(i+1)</td>
+                <td>@Model.Stavke[i].Opis</td>
+                <td>@Model.Stavke[i].Kolicina</td>
+            </tr>
+          }
+        </tbody>
+    </table>
+</div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.FakturaID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<style>
+    .dl-horizontal dt {
+        text-align: left;
+        margin-right:2%;
+        width:15%;
+    }
+    th {
+        background-color: #101010;
+        color:white;
+        width:33%;
+    }
+    td{
+        width:33%;
+    }
+    table{
+        border:1px solid black;
+    }
+</style>

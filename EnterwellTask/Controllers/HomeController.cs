@@ -11,32 +11,16 @@ using System.Web.Routing;
 
 namespace EnterwellTask.Controllers
 {
+    [Authorize]
+
     public class HomeController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
         public ActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
-                return View();
-            else return RedirectToAction("../Account/Login");
-
-
+            return RedirectToAction("../Fakturas");
         }
-       
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+      
     }
 }

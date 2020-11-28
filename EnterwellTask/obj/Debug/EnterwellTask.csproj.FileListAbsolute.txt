@@ -127,3 +127,4 @@ C:\Users\Petar\Desktop\Task\EnterwellTask\EnterwellTask\bin\Microsoft.IdentityMo
 C:\Users\Petar\Desktop\Task\EnterwellTask\EnterwellTask\bin\Microsoft.Rest.ClientRuntime.xml
 C:\Users\Petar\Desktop\Task\EnterwellTask\EnterwellTask\bin\Microsoft.Rest.ClientRuntime.Azure.xml
 C:\Users\Petar\Desktop\Task\EnterwellTask\EnterwellTask\bin\Microsoft.Rest.ClientRuntime.Azure.Authentication.xml
+C:\Users\Petar\Desktop\Task\EnterwellTask\EnterwellTask\obj\Debug\EnterwellTask.Migrations.MyDB.FinalMigration.resources

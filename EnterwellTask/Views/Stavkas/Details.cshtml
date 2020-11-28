@@ -11,6 +11,13 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.StavkaID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StavkaID)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Opis)
         </dt>
 
@@ -26,13 +33,6 @@
             @Html.DisplayFor(model => model.Cijena)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UkupnaCijena)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UkupnaCijena)
-        </dd>
 
     </dl>
 </div>
@@ -40,3 +40,10 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.StavkaID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<style>
+    .dl-horizontal dt {
+        text-align: left;
+        margin-right: 2%;
+        width: 15%;
+    }
+</style>

@@ -20,17 +20,6 @@ namespace EnterwellTask.Models
         modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
         modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
 
-        //modelBuilder.Entity<StavkeFakture>().HasKey(c => new { c.FakturaID, c.StavkaID });
-
-        //modelBuilder.Entity<Stavka>()
-        //        .HasMany(c => c.StavkeFakture)
-        //        .WithRequired()
-        //        .HasForeignKey(c => c.StavkaID);
-
-        //modelBuilder.Entity<Faktura>()
-        //        .HasMany(c => c.StavkeFakture)
-        //        .WithRequired()
-        //        .HasForeignKey(c => c.FakturaID);
         }
     public DbSet<Faktura> Faktura { get; set; }
     public DbSet<Stavka> Stavka { get; set; }

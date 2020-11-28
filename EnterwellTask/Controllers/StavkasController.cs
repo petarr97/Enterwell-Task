@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EnterwellTask.Models;
+using Microsoft.Rest.ClientRuntime.Azure.Authentication.Utilities;
 
 namespace EnterwellTask.Controllers
 {
+    [Authorize]
     public class StavkasController : Controller
     {
         private EnterwellDBContext db = new EnterwellDBContext();
@@ -17,28 +19,31 @@ namespace EnterwellTask.Controllers
         // GET: Stavkas
         public ActionResult Index()
         {
-            return View(db.Stavka.ToList());
+              return View(db.Stavka.ToList());
         }
 
         // GET: Stavkas/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Stavka stavka = db.Stavka.Find(id);
-            if (stavka == null)
-            {
-                return HttpNotFound();
-            }
-            return View(stavka);
-        }
+           
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Stavka stavka = db.Stavka.Find(id);
+                if (stavka == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(stavka);
+          }
+        
 
         // GET: Stavkas/Create
         public ActionResult Create()
         {
-            return View();
+                return View();
+
         }
 
         // POST: Stavkas/Create
@@ -46,31 +51,37 @@ namespace EnterwellTask.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "StavkaID,Opis,Cijena,UkupnaCijena")] Stavka stavka)
+        public ActionResult Create([Bind(Include = "StavkaID,Opis,Cijena")] Stavka stavka)
         {
-            if (ModelState.IsValid)
-            {
-                db.Stavka.Add(stavka);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            
+                if (ModelState.IsValid)
+                {
+                    db.Stavka.Add(stavka);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            return View(stavka);
+                return View(stavka);
+            
+
         }
 
         // GET: Stavkas/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Stavka stavka = db.Stavka.Find(id);
-            if (stavka == null)
-            {
-                return HttpNotFound();
-            }
-            return View(stavka);
+           
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Stavka stavka = db.Stavka.Find(id);
+                if (stavka == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(stavka);
+          
+
         }
 
         // POST: Stavkas/Edit/5
@@ -78,30 +89,33 @@ namespace EnterwellTask.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "StavkaID,Opis,Cijena,UkupnaCijena")] Stavka stavka)
+        public ActionResult Edit([Bind(Include = "StavkaID,Opis,Cijena")] Stavka stavka)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(stavka).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(stavka);
+         
+                if (ModelState.IsValid)
+                {
+                    db.Entry(stavka).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(stavka);
+            
         }
 
         // GET: Stavkas/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Stavka stavka = db.Stavka.Find(id);
-            if (stavka == null)
-            {
-                return HttpNotFound();
-            }
-            return View(stavka);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Stavka stavka = db.Stavka.Find(id);
+                if (stavka == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(stavka);
+         
         }
 
         // POST: Stavkas/Delete/5
@@ -109,10 +123,11 @@ namespace EnterwellTask.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Stavka stavka = db.Stavka.Find(id);
-            db.Stavka.Remove(stavka);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+                Stavka stavka = db.Stavka.Find(id);
+                db.Stavka.Remove(stavka);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+         
         }
 
         protected override void Dispose(bool disposing)
@@ -123,5 +138,7 @@ namespace EnterwellTask.Controllers
             }
             base.Dispose(disposing);
         }
+     
     }
+    
 }
